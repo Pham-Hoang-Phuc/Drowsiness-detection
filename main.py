@@ -154,7 +154,7 @@ class DrowsinessDetector(QMainWindow):
                             lm = face_landmarks.landmark[point_id]
                             x, y = int(lm.x * iw), int(lm.y * ih)
                             points.append((x, y))
-                            cv2.circle(frame, (x, y), 3, (0, 255, 0), -1)
+                            # cv2.circle(frame, (x, y), 3, (0, 255, 0), -1)
 
                         if len(points) != 0:
                             # x1, y1 = points[0]  
