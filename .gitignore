@@ -1,0 +1,10 @@
+/desktop.ini
+/venv
+/database
+/datasets
+/.gitmodules
+/.idea
+/GroundingDINO
+/datasetsHungingFace
+/requirements
+yolov8n.pt

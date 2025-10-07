@@ -157,9 +157,9 @@ class DrowsinessDetector(QMainWindow):
                             cv2.circle(frame, (x, y), 3, (0, 255, 0), -1)
 
                         if len(points) != 0:
-                            x1, y1 = points[0]  
-                            x2, _ = points[1]  
-                            _, y3 = points[2]  
+                            # x1, y1 = points[0]  
+                            # x2, _ = points[1]  
+                            # _, y3 = points[2]  
 
                             x4, y4 = points[3]  
                             x5, y5 = points[4]  
@@ -170,11 +170,11 @@ class DrowsinessDetector(QMainWindow):
                             x6, x7 = min(x6, x7), max(x6, x7)
                             y6, y7 = min(y6, y7), max(y6, y7)
 
-                            mouth_roi = frame[y1:y3, x1:x2]
-                            cv2.imshow("mouth roi",mouth_roi)
+                            # mouth_roi = frame[y1:y3, x1:x2]
+                            # cv2.imshow("mouth roi",mouth_roi)
                             
                             right_eye_roi = frame[y4:y5, x4:x5]
-                            cv2.imshow("right eye roi",right_eye_roi)
+                            # cv2.imshow("right eye roi",right_eye_roi)
                             
                             left_eye_roi = frame[y6:y7, x6:x7]
 
