@@ -7,4 +7,21 @@
 /GroundingDINO
 /datasetsHungingFace
 /requirements
+dataset.yaml
 yolov8n.pt
+
+# Bỏ qua tất cả các file video
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+*.wmv
+*.webm
+
+# bỏ qua folder test
+/test/
+
+# bỏ qua các file 
+test.py
+note.txt

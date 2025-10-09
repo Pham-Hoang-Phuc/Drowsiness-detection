@@ -10,6 +10,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QHBoxLayout, QWidget
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import Qt
+from collections import deque
 
 class DrowsinessDetector(QMainWindow):
     def __init__(self):
@@ -28,7 +29,8 @@ class DrowsinessDetector(QMainWindow):
         self.left_eye_still_closed = False  
         self.right_eye_still_closed = False 
         self.yawn_in_progress = False  
-        
+        self.yawn_buffer = deque(maxlen=100)  # lưu 15 frame gần nhất
+
         self.face_mesh = mp.solutions.face_mesh.FaceMesh(min_detection_confidence=0.5, min_tracking_confidence=0.5)
         self.points_ids = [187, 411, 152, 68, 174, 399, 298]
 
@@ -52,8 +54,15 @@ class DrowsinessDetector(QMainWindow):
 
         self.update_info()
         
-        self.detectyawn = YOLO("D:\Fod\desktop\drowsiness-train\\runs\custom\yawn-ver2.pt")
-        self.detecteye = YOLO("D:\Fod\desktop\drowsiness-train\\runs\custom\eyes-ver2.pt")
+        #-----------------------------------------------------------------------------
+        ############################# THAY MODEL Ở ĐÂY ##############################
+        self.detecteye = YOLO(
+            r"D:\Fod\desktop\Drowsiness-detection\runs\custom\eyes-ver4 (MRL).pt"
+            )
+        self.detectyawn = YOLO(
+            r"D:\Fod\desktop\Drowsiness-detection\runs\custom\yawn-ver4 (YawDD).pt"
+            )
+        #-----------------------------------------------------------------------------
         
         self.cap = cv2.VideoCapture(0)
         time.sleep(1.000)
@@ -67,19 +76,20 @@ class DrowsinessDetector(QMainWindow):
         self.capture_thread.start()
         self.process_thread.start()
         
+        
     def update_info(self):
-        if round(self.yawn_duration, 2) > 7.0:
+        if round(self.yawn_duration, 2) > 4.0:
             # self.play_sound_in_thread()
-            self.alert_text = "<p style='color: orange; font-weight: bold;'>⚠️ Alert: Prolonged Yawn Detected!</p>"
+            self.alert_text = "<p style='color: orange; font-weight: bold;'> Alert: Prolonged Yawn Detected!</p>"
 
-        if round(self.microsleeps, 2) > 4.0:
+        if round(self.microsleeps, 2) > 3.0:
             # self.play_sound_in_thread()
-            self.alert_text = "<p style='color: red; font-weight: bold;'>⚠️ Alert: Prolonged Microsleep Detected!</p>"
+            self.alert_text = "<p style='color: red; font-weight: bold;'> Alert: Prolonged Microsleep Detected!</p>"
 
 
         info_text = (
-            f"<div style='font-family: Arial, sans-serif; color: #333;'>"
-            f"<h2 style='text-align: center; color: #4CAF50;'>Drowsiness Detector</h2>"
+            f"<div style='font-family: Arial, sans-serif; color: #333; font-size:18px'>"
+            f"<h2 style='text-align: center; color: #4CAF50;font-size: 24px';>Drowsiness Detector</h2>"
             f"<hr style='border: 1px solid #4CAF50;'>"
             f"{self.alert_text}"  # Display alert if it exists
             f"<p><b>👁️ Blinks:</b> {self.blinks}</p>"
@@ -92,42 +102,56 @@ class DrowsinessDetector(QMainWindow):
         self.info_label.setText(info_text)
 
 
+
     def predict_eye(self, eye_frame, eye_state):
         results_eye = self.detecteye.predict(eye_frame, verbose=False)
 
         if results_eye is None or len(results_eye) == 0:
-            print("⚠️ No prediction result returned.")
+            print("No prediction result returned.")
             return eye_state
 
         if results_eye[0].probs is None:
-            print("⚠️ No probabilities returned (model may be detection, not classification).")
+            print("No probabilities returned (model may be detection, not classification).")
             return eye_state
 
         probs = results_eye[0].probs
         top_class_id = probs.top1
         label = self.detecteye.names[top_class_id]
+        
+        if label.lower() in ["close", "closed", "close-eyes"]:
+            label = "Eye close"
+            
         eye_state = label
 
         return eye_state
 
-    def predict_yawn(self, yawn_frame):
-        results_yawn = self.detectyawn.predict(yawn_frame)
-        # Lấy kết quả classification
-        probs = results_yawn[0].probs  # Xác suất của từng class
 
-        # Nếu không có xác suất (model không phải classify hoặc lỗi input)
+
+    def predict_yawn(self, yawn_frame):
+        results_yawn = self.detectyawn.predict(yawn_frame, verbose=False)
+        
+        # Lấy kết quả classification
+        probs = results_yawn[0].probs  
         if probs is None:
-            print("⚠️ Warning: results_yawn[0].probs = None, có thể model không phải classification model.")
+            print("Warning: results_yawn[0].probs = None, có thể model không phải classification model.")
             return self.yawn_state
 
-        # Lấy ID class có xác suất cao nhất
+        # Lấy class có xác suất cao nhất
         top_class_id = probs.top1
-
-        # Lấy tên class tương ứng
         label = self.detectyawn.names[top_class_id]
-        self.yawn_state = label
+
+        # Thêm vào buffer để làm mượt kết quả
+        self.yawn_buffer.append(label)
+
+        # Nếu trong 15 frame gần nhất có hơn 10 frame là "Yawn" → coi là đang ngáp
+        if self.yawn_buffer.count("yawn") + self.yawn_buffer.count("Yawn") > 90:
+            self.yawn_state = "Yawn"
+        else:
+            self.yawn_state = "Not Yawn"
 
         return self.yawn_state                           
+
+
 
     def capture_frames(self):
         while not self.stop_event.is_set():
@@ -137,6 +161,8 @@ class DrowsinessDetector(QMainWindow):
                     self.frame_queue.put(frame)
             else:
                 break
+
+
 
     def process_frames(self):
         while not self.stop_event.is_set():
@@ -157,9 +183,9 @@ class DrowsinessDetector(QMainWindow):
                             # cv2.circle(frame, (x, y), 3, (0, 255, 0), -1)
 
                         if len(points) != 0:
-                            # x1, y1 = points[0]  
-                            # x2, _ = points[1]  
-                            # _, y3 = points[2]  
+                            x1, y1 = points[0]  
+                            x2, _ = points[1]  
+                            _, y3 = points[2]  
 
                             x4, y4 = points[3]  
                             x5, y5 = points[4]  
@@ -170,25 +196,30 @@ class DrowsinessDetector(QMainWindow):
                             x6, x7 = min(x6, x7), max(x6, x7)
                             y6, y7 = min(y6, y7), max(y6, y7)
 
-                            # mouth_roi = frame[y1:y3, x1:x2]
+                            mouth_roi = frame[y1:y3, x1:x2]
                             # cv2.imshow("mouth roi",mouth_roi)
                             
                             right_eye_roi = frame[y4:y5, x4:x5]
                             # cv2.imshow("right eye roi",right_eye_roi)
                             
                             left_eye_roi = frame[y6:y7, x6:x7]
-
+                            # cv2.imshow("left eye roi",left_eye_roi)
+                            
+                            # chuyển sang grayscale
+                            right_eye_roi = cv2.cvtColor(right_eye_roi, cv2.COLOR_BGR2GRAY)
+                            left_eye_roi = cv2.cvtColor(left_eye_roi, cv2.COLOR_BGR2GRAY)
+                            
+                            # cv2.imshow("right", right_eye_roi)
+                            # cv2.imshow("left", left_eye_roi)
                             try:
                                 self.left_eye_state = self.predict_eye(left_eye_roi, self.left_eye_state)
                                 self.right_eye_state = self.predict_eye(right_eye_roi, self.right_eye_state)
                                 self.predict_yawn(frame)
                                 
-                                
-                                print("HEHEHEHEHEHEHE", self.left_eye_state)
                             except Exception as e:
                                 print(f"Error al realizar la predicción: {e}")
 
-                            if self.left_eye_state == "Closed" and self.right_eye_state == "Closed":
+                            if self.left_eye_state == "Eye close" and self.right_eye_state == "Eye close":
                                 if not self.left_eye_still_closed and not self.right_eye_still_closed:
                                     self.left_eye_still_closed, self.right_eye_still_closed = True , True
                                     self.blinks += 1 
@@ -198,7 +229,7 @@ class DrowsinessDetector(QMainWindow):
                                     self.left_eye_still_closed, self.right_eye_still_closed = False , False
                                 self.microsleeps = 0
 
-                            if self.yawn_state == "yawn":
+                            if self.yawn_state == "Yawn":
                                 if not self.yawn_in_progress:
                                     self.yawn_in_progress = True
                                     self.yawns += 1  
