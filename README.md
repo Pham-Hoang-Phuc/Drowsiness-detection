@@ -12,5 +12,5 @@ Mình sử dụng mô hình **YOLOv11 (classification)** được **custom-train
 
 ## Mô hình
 - **Model:** YOLOv11n-cls  
-- **Task:** Eye & drowsiness classification  
+- **Task:** Eye & Yawn --> drowsiness classification  
 - **Training data:** YawDD + MRL Eyes  
