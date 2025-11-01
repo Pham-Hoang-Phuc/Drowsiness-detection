@@ -92,7 +92,7 @@ class DrowsinessDetector(QMainWindow):
 
         # Yawn model (CNN, không dùng YOLO)
         self.detectyawn = CNN().to(self.device)
-        self.detectyawn.load_state_dict(torch.load(r"runs\custom\mouth_cnn_ver1.pth", map_location=self.device))
+        self.detectyawn.load_state_dict(torch.load(r"runs\custom\mouth_cnn_ver2.pth", map_location=self.device))
         self.detectyawn.eval()
 
         self.cap = cv2.VideoCapture(0)
@@ -219,9 +219,9 @@ class DrowsinessDetector(QMainWindow):
                             right_eye_roi = frame[max(0, y4-margin):y5+margin, max(0, x4-margin):x5+margin]
                             left_eye_roi = frame[max(0, y6-margin):y7+margin, x6-margin:x7+margin]
 
-                            cv2.imshow("roi", mouth_roi)
-                            cv2.imshow("eyes", right_eye_roi)
-                            cv2.imshow("ccc", left_eye_roi)
+                            # cv2.imshow("roi", mouth_roi)
+                            # cv2.imshow("eyes", right_eye_roi)
+                            # cv2.imshow("ccc", left_eye_roi)
                             # Eye
                             if right_eye_roi.size > 0 and left_eye_roi.size > 0:
                                 right_eye_gray = cv2.cvtColor(right_eye_roi, cv2.COLOR_BGR2GRAY)
