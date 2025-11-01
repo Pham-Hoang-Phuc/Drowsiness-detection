@@ -9,7 +9,7 @@ Mình sử dụng mô hình **YOLOv11 (classification)** được **custom-train
 - [MRL Eye Dataset](https://www.kaggle.com/datasets/imadeddinedjerarda/mrl-eye-dataset)  
 
 ## Mô hình
-- **Model:** YOLOv11n-cls  
+- **Model:** YOLOv11n-cls and CNN cls  
 - **Task:** Eye & Yawn → Drowsiness Classification  
 - **Training Data:** YawDD + MRL Eyes  
 ## Môi trường & Cài đặt  
