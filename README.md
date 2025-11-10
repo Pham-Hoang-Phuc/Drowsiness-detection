@@ -1,4 +1,4 @@
-# Drowsiness Detection (Phát hiện Buồn ngủ)
+# Drowsiness Detection
 
 ## Mục lục
 - [Giới thiệu](#giới-thiệu)
@@ -8,8 +8,6 @@
   - [Bước 2: Chạy Client (Giao diện)](#bước-2-chạy-client-giao-diện)
 - [Thông tin Mô hình](#thông-tin-mô-hình)
 - [Cấu trúc Thư mục](#cấu-trúc-thư-mục)
----
-
 
 ## Giới thiệu
 Dự án này giúp **phát hiện tình trạng buồn ngủ của người lái xe** theo thời gian thực.
@@ -28,8 +26,6 @@ Dự án được xây dựng theo mô hình **Client-Server**:
     * Giao diện Windows Forms (C#) hiển thị video trực tiếp và các chỉ số từ Server.
     * Khi người dùng bấm "Connect", Client sẽ kết nối đến Server (`127.0.0.1:9001`).
     * Cập nhật liên tục các chỉ số: số lần nháy mắt, thời gian ngáp, microsleep, thời gian xử lý.
-
----
 
 ## Hướng dẫn sử dụng
 
@@ -82,8 +78,6 @@ Nếu thành công, bạn sẽ thấy thông báo trong terminal:
 Server đang chạy tại 127.0.0.1:9001
 ```
 *Hãy giữ cửa sổ terminal này chạy.*
-
----
 
 ### Bước 2: Chạy Client (Giao diện)
 
