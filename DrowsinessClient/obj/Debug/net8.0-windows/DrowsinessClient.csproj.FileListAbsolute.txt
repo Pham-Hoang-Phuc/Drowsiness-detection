@@ -102,3 +102,14 @@ D:\Fod\desktop\Trungvo\DrowsinessClient\bin\Debug\net8.0-windows\runtimes\win-x8
 D:\Fod\desktop\Trungvo\DrowsinessClient\obj\Debug\net8.0-windows\Drowsine.FD943AFC.Up2Date
 D:\Fod\desktop\Trungvo\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.genruntimeconfig.cache
 D:\Fod\desktop\Trungvo\DrowsinessClient\obj\Debug\net8.0-windows\ref\DrowsinessClient.dll
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.csproj.AssemblyReference.cache
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.Form1.resources
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.csproj.GenerateResource.cache
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.GeneratedMSBuildEditorConfig.editorconfig
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.AssemblyInfoInputs.cache
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.AssemblyInfo.cs
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.csproj.CoreCompileInputs.cache
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.sourcelink.json
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.dll
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\refint\DrowsinessClient.dll
+D:\Fod\desktop\Drowsiness-detection\DrowsinessClient\obj\Debug\net8.0-windows\DrowsinessClient.pdb

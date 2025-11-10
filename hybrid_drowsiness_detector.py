@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import time
 from collections import deque
+import pygame
 
 # ==================== DEFINE CNN STRUCTURE ====================
 class CNN(nn.Module):
@@ -41,7 +42,7 @@ class HybridDrowsinessDetector:
         self.eyes_closed_duration = 0.0
         self.last_process_time = time.time()
         self.MAR_THRESHOLD = 0.8  # Ngưỡng để nhận diện ngáp bằng hình học
-        self.MAR_DURATION_THRESHOLD = 2.0  # Thời gian 2 giây
+        self.MAR_DURATION_THRESHOLD = 3.0  # Thời gian 2 giây
         self.mar_start_time = None
 
         self.left_eye_still_closed = False
@@ -53,7 +54,10 @@ class HybridDrowsinessDetector:
         self.frame_data = deque(maxlen=1800)  # 30 FPS * 60 seconds
         self.frame_timestamps = deque(maxlen=1800)
         self.drowsy = False  # Store drowsiness status as boolean
-
+        self.was_drowsy = False
+        pygame.mixer.init()
+        self.alarm_sound = pygame.mixer.Sound('sound.wav')
+        
         self.face_mesh = mp.solutions.face_mesh.FaceMesh(
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5
@@ -161,9 +165,19 @@ class HybridDrowsinessDetector:
                     
         # Calculate total score T
         T = W_r + W_t + W_b + W_y
-
+        
         # Decision
         self.drowsy = T > 2
+        # self.drowsy = True
+        
+        # Thêm phần phát âm thanh cảnh báo
+        if self.drowsy and not self.was_drowsy:
+            print("Phát hiện buồn ngủ! Phát âm thanh cảnh báo...")
+            self.alarm_sound.play()  # Phát 1 lần (hoặc loop: self.alarm_sound.play(loops=2) cho 3 lần)
+            self.was_drowsy = True
+        elif not self.drowsy:
+            self.was_drowsy = False
+            
         # self.drowsy = True
         print(f"Drowsiness Score: {T}, Drowsy: {self.drowsy}, W_r: {W_r}, W_t: {W_t}, W_b: {W_b}, W_y: {W_y}")
         return T, self.drowsy

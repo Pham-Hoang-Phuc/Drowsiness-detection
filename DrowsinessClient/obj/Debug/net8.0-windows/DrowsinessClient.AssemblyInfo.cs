@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DrowsinessClient")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09bf08f1d895529263e971567ee90eaaa5a5730b")]
 [assembly: System.Reflection.AssemblyProductAttribute("DrowsinessClient")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DrowsinessClient")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

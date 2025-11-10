@@ -1905,11 +1905,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+      "projectUniqueName": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
       "projectName": "DrowsinessClient",
-      "projectPath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+      "projectPath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\obj\\",
+      "outputPath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

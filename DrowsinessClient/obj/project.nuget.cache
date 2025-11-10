@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "W8U8C5g3ri4=",
+  "dgSpecHash": "s4+xYlSmY4o=",
   "success": true,
-  "projectFilePath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+  "projectFilePath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\emgu.cv\\4.9.0.5494\\emgu.cv.4.9.0.5494.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\emgu.cv.bitmap\\4.9.0.5494\\emgu.cv.bitmap.4.9.0.5494.nupkg.sha512",
@@ -39,9 +39,9 @@
       "code": "NU1603",
       "level": "Warning",
       "message": "DrowsinessClient depends on Emgu.CV (>= 4.9.0) but Emgu.CV 4.9.0 was not found. Emgu.CV 4.9.0.5494 was resolved instead.",
-      "projectPath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+      "projectPath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+      "filePath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
       "libraryId": "Emgu.CV",
       "targetGraphs": [
         "net8.0-windows7.0"
@@ -51,9 +51,9 @@
       "code": "NU1603",
       "level": "Warning",
       "message": "DrowsinessClient depends on Emgu.CV.Bitmap (>= 4.9.0) but Emgu.CV.Bitmap 4.9.0 was not found. Emgu.CV.Bitmap 4.9.0.5494 was resolved instead.",
-      "projectPath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+      "projectPath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+      "filePath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
       "libraryId": "Emgu.CV.Bitmap",
       "targetGraphs": [
         "net8.0-windows7.0"
@@ -63,9 +63,9 @@
       "code": "NU1603",
       "level": "Warning",
       "message": "DrowsinessClient depends on Emgu.CV.runtime.windows (>= 4.9.0) but Emgu.CV.runtime.windows 4.9.0 was not found. Emgu.CV.runtime.windows 4.9.0.5494 was resolved instead.",
-      "projectPath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+      "projectPath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\Fod\\desktop\\Trungvo\\DrowsinessClient\\DrowsinessClient.csproj",
+      "filePath": "D:\\Fod\\desktop\\Drowsiness-detection\\DrowsinessClient\\DrowsinessClient.csproj",
       "libraryId": "Emgu.CV.runtime.windows",
       "targetGraphs": [
         "net8.0-windows7.0"
