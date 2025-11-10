@@ -1,13 +1,13 @@
 # Drowsiness Detection (Phát hiện Buồn ngủ)
 
 ## Mục lục
-- [Giới thiệu](#-giới-thiệu)
-- [Kiến trúc & Cách hoạt động](#-kiến-trúc--cách-hoạt-động)
-- [Hướng dẫn sử dụng](#-hướng-dẫn-sử-dụng)
+- [Giới thiệu](#giới-thiệu)
+- [Kiến trúc & Cách hoạt động](#kiến-trúc--cách-hoạt-động)
+- [Hướng dẫn sử dụng](#hướng-dẫn-sử-dụng)
   - [Bước 1: Cài đặt và Chạy Server](#bước-1-cài-đặt-và-chạy-server)
   - [Bước 2: Chạy Client (Giao diện)](#bước-2-chạy-client-giao-diện)
-- [Thông tin Mô hình](#-thông-tin-mô-hình)
-- [Cấu trúc Thư mục](#-cấu-trúc-thư-mục)
+- [Thông tin Mô hình](#thông-tin-mô-hình)
+- [Cấu trúc Thư mục](#cấu-trúc-thư-mục)
 ---
 
 
@@ -16,19 +16,18 @@ Dự án này giúp **phát hiện tình trạng buồn ngủ của người lá
 
 Ứng dụng sử dụng một mô hình deep learning để phân tích video từ webcam, phân loại trạng thái của người lái xe dựa trên các đặc điểm của mắt và miệng. Mô hình có thể nhận diện 3 trạng thái chính: **Mắt mở**, **Mắt nhắm**, và **Ngáp (Yawn)**.
 
-
 ## Kiến trúc & Cách hoạt động
 Dự án được xây dựng theo mô hình **Client-Server**:
 
 * **Server (`server.py`):**
     * Khởi chạy máy chủ tại địa chỉ `127.0.0.1:9001`.
     * Chạy mô hình AI (CNN) để xử lý từng khung hình, phát hiện khuôn mặt và phân loại trạng thái (mở, nhắm, ngáp).
-    * Stream (truyền) video đã được xử lý qua mạng cho Client.
-
+    * Gửi video đã xử lý và dữ liệu JSON (số lần nháy mắt, ngáp, thời gian nhắm mắt, trạng thái buồn ngủ, v.v.) đến Client.
+      
 * **Client (`DrowsinessClient.exe`):**
-    * Đây là Giao diện Người dùng (GUI).
+    * Giao diện Windows Forms (C#) hiển thị video trực tiếp và các chỉ số từ Server.
     * Khi người dùng bấm "Connect", Client sẽ kết nối đến Server (`127.0.0.1:9001`).
-    * Nhận luồng video đã được phân tích từ Server và hiển thị lên màn hình cho người dùng.
+    * Cập nhật liên tục các chỉ số: số lần nháy mắt, thời gian ngáp, microsleep, thời gian xử lý.
 
 ---
 
@@ -88,14 +87,15 @@ Server đang chạy tại 127.0.0.1:9001
 
 ### Bước 2: Chạy Client (Giao diện)
 
-1.  Từ thư mục dự án, nhấp đúp chuột để chạy file **`DrowsinessClient.exe`**.
-2.  Một giao diện (UI) sẽ xuất hiện.
-3.  Nhấp vào nút **"Connect"**.
+1.  Từ thư mục dự án, bấm theo đường dẫn sau DrowsinessClient\bin\Debug\net8.0-windows.
+2.  Nhấp đúp chuột để chạy file **`DrowsinessClient.exe`**
+3.  Một giao diện (UI) sẽ xuất hiện.
+4.  Nhấp vào nút **"Connect"**.
 
 Màn hình sẽ hiển thị video từ webcam của bạn, kèm theo các phân tích và cảnh báo về tình trạng buồn ngủ (nếu có).
 
 ## Thông tin Mô hình
-* **Model:** YOLOv11n-cls và CNN-cls (Sử dụng mô hình hybrid `hybrid_drowsiness_detector.py`).
+* **Model:** CNN-cls.
 * **Nhiệm vụ:** Phân loại Mắt & Ngáp → Phát hiện Buồn ngủ.
 * **Dữ liệu huấn luyện:**
     * [YawDD Dataset](https://ieee-dataport.org/open-access/yawdd-yawning-detection-dataset) (Cho phát hiện ngáp).
@@ -107,9 +107,9 @@ Màn hình sẽ hiển thị video từ webcam của bạn, kèm theo các phân
 ├── DrowsinessClient/       # (Có thể chứa mã nguồn của Client)
 ├── runs/                   # (Kết quả huấn luyện/log của CNN)
 ├── .gitignore
-├── DrowsinessClient.exe    # (File chạy Client GUI)
 ├── hybrid_drowsiness_detector.py # (Logic AI/model cốt lõi)
 ├── README.md               # (Bạn đang đọc file này)
 ├── requirements.txt        # (Các thư viện Python cho Server)
+├── sound.wav               # (Âm thanh cảnh báo)
 └── server.py               # (File chạy Server backend)
 ```
