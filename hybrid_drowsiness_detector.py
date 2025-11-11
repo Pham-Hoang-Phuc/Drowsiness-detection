@@ -41,8 +41,8 @@ class HybridDrowsinessDetector:
         self.yawn_duration = 0.0
         self.eyes_closed_duration = 0.0
         self.last_process_time = time.time()
-        self.MAR_THRESHOLD = 0.8  # Ngưỡng để nhận diện ngáp bằng hình học
-        self.MAR_DURATION_THRESHOLD = 4.0  # Thời gian 3 giây
+        self.MAR_THRESHOLD = 0.7  
+        self.MAR_DURATION_THRESHOLD = 4.0  
         self.mar_start_time = None
 
         self.left_eye_still_closed = False
@@ -172,8 +172,8 @@ class HybridDrowsinessDetector:
         
         # âm thanh cảnh báo
         if self.drowsy and not self.was_drowsy:
-            print("Phát hiện buồn ngủ! Phát âm thanh cảnh báo...")
-            self.alarm_sound.play()  # Phát 1 lần
+            print("Phát hiện buồn ngủ!")
+            self.alarm_sound.play(1) 
             self.was_drowsy = True
         elif not self.drowsy:
             self.was_drowsy = False

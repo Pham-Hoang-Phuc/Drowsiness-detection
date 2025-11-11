@@ -9,6 +9,7 @@
 /requirements
 dataset.yaml
 yolov8n.pt
+__pycache__/
 
 # Bỏ qua tất cả các file video
 *.mp4
