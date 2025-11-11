@@ -42,13 +42,13 @@ class HybridDrowsinessDetector:
         self.eyes_closed_duration = 0.0
         self.last_process_time = time.time()
         self.MAR_THRESHOLD = 0.8  # Ngưỡng để nhận diện ngáp bằng hình học
-        self.MAR_DURATION_THRESHOLD = 3.0  # Thời gian 2 giây
+        self.MAR_DURATION_THRESHOLD = 4.0  # Thời gian 3 giây
         self.mar_start_time = None
 
         self.left_eye_still_closed = False
         self.right_eye_still_closed = False
         self.yawn_in_progress = False
-        self.yawn_buffer = deque(maxlen=15)
+        self.yawn_buffer = deque(maxlen=20)
 
         # For 1-minute window analysis (assuming 30 FPS)
         self.frame_data = deque(maxlen=1800)  # 30 FPS * 60 seconds
@@ -56,7 +56,7 @@ class HybridDrowsinessDetector:
         self.drowsy = False  # Store drowsiness status as boolean
         self.was_drowsy = False
         pygame.mixer.init()
-        self.alarm_sound = pygame.mixer.Sound('sound.wav')
+        self.alarm_sound = pygame.mixer.Sound('Radar.wav')
         
         self.face_mesh = mp.solutions.face_mesh.FaceMesh(
             min_detection_confidence=0.5,
@@ -170,16 +170,15 @@ class HybridDrowsinessDetector:
         self.drowsy = T > 2
         # self.drowsy = True
         
-        # Thêm phần phát âm thanh cảnh báo
+        # âm thanh cảnh báo
         if self.drowsy and not self.was_drowsy:
             print("Phát hiện buồn ngủ! Phát âm thanh cảnh báo...")
-            self.alarm_sound.play()  # Phát 1 lần (hoặc loop: self.alarm_sound.play(loops=2) cho 3 lần)
+            self.alarm_sound.play()  # Phát 1 lần
             self.was_drowsy = True
         elif not self.drowsy:
             self.was_drowsy = False
             
-        # self.drowsy = True
-        print(f"Drowsiness Score: {T}, Drowsy: {self.drowsy}, W_r: {W_r}, W_t: {W_t}, W_b: {W_b}, W_y: {W_y}")
+        # print(f"Drowsiness Score: {T}, Drowsy: {self.drowsy}, W_r: {W_r}, W_t: {W_t}, W_b: {W_b}, W_y: {W_y}")
         return T, self.drowsy
 
     # ==================== Process Frame ====================
@@ -217,7 +216,7 @@ class HybridDrowsinessDetector:
                         le_input = np.expand_dims(le_resized, axis=(0, -1)) / 255.0
                         right_eye_state = self.predict_eye(re_input)
                         left_eye_state = self.predict_eye(le_input)
-
+                    
                     mar = self.compute_mar(face_landmarks.landmark, iw, ih)
                     cnn_yawn = self.predict_yawn(mouth_roi)
 
