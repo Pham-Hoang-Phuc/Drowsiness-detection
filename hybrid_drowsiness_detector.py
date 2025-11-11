@@ -117,45 +117,45 @@ class HybridDrowsinessDetector:
         C = np.linalg.norm(np.array(pts[3]) - np.array(pts[5]))
         D = np.linalg.norm(np.array(pts[0]) - np.array(pts[4]))
         if D == 0:
-            return 0.0  # Tránh chia cho 0
+            return 0.0  # Avoid division by zero
         mar = (A + B + C) / (2.0 * D)
         return mar
 
     # ==================== Compute Drowsiness Score ====================
     def compute_drowsiness_score(self):
         # Initialize weights
-        # W_r: Trọng số Tỷ lệ Mắt nhắm
-        # W_t: Trọng số Thời gian Mắt nhắm liên tục
-        # W_b: Trọng số Tần suất Chớp mắt
-        # W_y: Trọng số Tần suất Ngáp
+        # W_r: Weight for Eye Closure Ratio
+        # W_t: Weight for Continuous Eye Closure Time
+        # W_b: Weight for Blink Frequency
+        # W_y: Weight for Yawn Frequency
         
         W_r = W_t = W_b = W_y = 0
 
-        # 1. Tỷ lệ mắt nhắm (r): Proportion of frames with eyes closed in 1 minute
+        # 1. Eye Closure Ratio (r): Proportion of frames with eyes closed in 1 minute
         if len(self.frame_data) > 0:
             closed_eye_frames = sum(1 for data in self.frame_data if data['eyes_closed'])
             r = closed_eye_frames / len(self.frame_data)
             if r > 0.3:  # If eye closure ratio > 30%
                 W_r = 1
 
-        # 2. Thời gian Mắt nhắm liên tục (t): Check if eyes closed > 2 seconds
+        # 2. Continuous Eye Closure Time (t): Check if eyes closed > 2 seconds
         if self.eyes_closed_duration > 2.0 and not self.yawn_in_progress:  # Not during yawn
             W_t = 1
 
-        # 3. Tần suất Chớp mắt (b): Blinks per minute
+        # 3. Blink Frequency (b): Blinks per minute
         if len(self.frame_timestamps) > 1:
             time_span = self.frame_timestamps[-1] - self.frame_timestamps[0]
             if time_span > 0:
                 blinks_per_minute = (self.blinks / time_span) * 60
-                if time_span < 10:  # thời gian quan sát quá ngắn
-                    blinks_per_minute = 0  # bỏ qua
+                if time_span < 10:  # observation time too short
+                    blinks_per_minute = 0  # skip
                 elif blinks_per_minute > 25 or blinks_per_minute < 5:
                     W_b = 1
 
         else:
             blinks_per_minute = 0  # Default if not enough data
 
-        # 4. Tần suất Ngáp (y): số lần ngáp trong vòng 1 phút
+        # 4. Yawn Frequency (y): number of yawns within 1 minute
         if len(self.frame_timestamps) > 1:
             time_span = self.frame_timestamps[-1] - self.frame_timestamps[0]
             if time_span > 0:
@@ -170,7 +170,7 @@ class HybridDrowsinessDetector:
         self.drowsy = T > 2
         # self.drowsy = True
         
-        # âm thanh cảnh báo
+        # alarm sound
         if self.drowsy and not self.was_drowsy:
             print("Phát hiện buồn ngủ!")
             self.alarm_sound.play(1) 

@@ -175,7 +175,7 @@ namespace DrowsinessClient
                         if (drowsy)
                         {
                             using var g = Graphics.FromImage(picVideo.Image);
-                            string warning = $"CẢNH BÁO!\nTài xế đang buồn ngủ";
+                            string warning = $"WARNING!\nThe driver is drowsy";
                             var font = new Font("Segoe UI", 22, FontStyle.Bold);
                             var size = g.MeasureString(warning, font);
                             var rect = new RectangleF(20, 80, size.Width + 40, size.Height + 20);
@@ -202,8 +202,8 @@ namespace DrowsinessClient
         private void UpdateStats()
         {
             string alert = "";
-            if (drowsy) alert = "CẢNH BÁO: BUỒN NGỦ!\n";
-            else if (yawnDuration > 2) alert = "NGÁP DÀI!\n";
+            if (drowsy) alert = "WARNING: DROWSY!\n";
+            else if (yawnDuration > 2) alert = "LONG YAWN\n";
 
             lblStats.Text =
                 "PYTHON + GPU SERVER\n" +
