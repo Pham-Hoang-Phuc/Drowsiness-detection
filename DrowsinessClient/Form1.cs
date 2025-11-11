@@ -212,9 +212,7 @@ namespace DrowsinessClient
                 $"Blinks: {blinks}\n" +
                 $"Microsleeps: {microsleeps:F2} s\n" +
                 $"Yawns: {yawns}\n" +
-                $"Yawn Duration: {yawnDuration:F2} s\n" +
-                $"\nProcessing: {processingTime:F1} ms\n" +
-                $"GPU: RTX 3050 (CUDA 12.6)";
+                $"Yawn Duration: {yawnDuration:F2} s\n";
         }
 
         private int GetInt(Dictionary<string, object> d, string k) => d.TryGetValue(k, out var v) ? Convert.ToInt32(v) : 0;
