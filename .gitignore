@@ -9,7 +9,7 @@
 /requirements
 dataset.yaml
 yolov8n.pt
-__pycache__/
+
 
 # Bỏ qua tất cả các file video
 *.mp4
@@ -22,7 +22,8 @@ __pycache__/
 
 # bỏ qua folder test
 /test/
-
+/dataset/
+/__pycache__/
 # bỏ qua các file 
 test.py
 note.txt
