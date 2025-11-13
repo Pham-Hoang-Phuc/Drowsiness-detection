@@ -91,13 +91,13 @@ Trong ứng dụng Client, hãy bấm nút "CONNECT TO". Sau khi kết nối th�
 ## Cấu trúc Thư mục
 ```
 .
-├── alarm/                  # (thư mục chứa các âm thanh cảnh báo)
-├── DrowsinessClient/       # (Có thể chứa mã nguồn của Client)
+├── alarm/                  # (Thư mục chứa các âm thanh cảnh báo)
+├── DrowsinessClient/       # (Mã nguồn của Client)
 ├── runs/                   # (Kết quả huấn luyện/log của CNN)
 ├── .gitignore
 ├── hybrid_drowsiness_detector.py # (Logic AI/model cốt lõi)
 ├── README.md               # (Bạn đang đọc file này)
-├── requirements.txt        # (Các thư viện Python cho Server)
+├── requirements.txt        # (Các thư viện Python)
 ├── run.py                  # (File thực thi)
 └── server.py               # (File chạy Server backend)
 ```
