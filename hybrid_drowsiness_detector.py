@@ -56,7 +56,7 @@ class HybridDrowsinessDetector:
         self.drowsy = False  # Store drowsiness status as boolean
         self.was_drowsy = False
         pygame.mixer.init()
-        self.alarm_sound = pygame.mixer.Sound('Radar.wav')
+        self.alarm_sound = pygame.mixer.Sound('alarm\Radar.wav')
         
         self.face_mesh = mp.solutions.face_mesh.FaceMesh(
             min_detection_confidence=0.5,
