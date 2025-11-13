@@ -91,7 +91,7 @@ Trong ứng dụng Client, hãy bấm nút "CONNECT TO". Sau khi kết nối th�
 ## Cấu trúc Thư mục
 ```
 .
-├── alarm/                  # (thư mục chứa các file cảnh báo)
+├── alarm/                  # (thư mục chứa các âm thanh cảnh báo)
 ├── DrowsinessClient/       # (Có thể chứa mã nguồn của Client)
 ├── runs/                   # (Kết quả huấn luyện/log của CNN)
 ├── .gitignore
